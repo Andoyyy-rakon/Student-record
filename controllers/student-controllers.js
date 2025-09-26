@@ -245,10 +245,65 @@ const addstudent= async(req,res)=>{
 }
 
 const updateStudentByid= async(req,res)=>{
+    try{
+        const updateStudent=req.params.id;
+        const StudentForm=req.body;
+        const studentUpdated=await StudentScheme.findByIdAndUpdate(updateStudent,StudentForm,{new:true})
+
+        if(!studentUpdated){
+            return res.status(404).json({
+                success:false,
+                message:"No student found with the given ID"
+            })
+        }
+
+
+        res.status(200).json({
+            succes:true,
+            message:`Student with ID ${studentUpdated.id} updated successfully`,
+            data:studentUpdated
+        })
+        
+    }catch(error){
+        console.error(error)
+        res.status(500).json({
+            succes:false,
+            message:"Something went wrong! Try it again"
+        })
+    }
 
 }
 
 const deleteStudentById= async(req,res)=>{
+    try{
+        const deleteStudent = req.params.id;
+        const studentDeleted=await StudentScheme.findByIdAndDelete(deleteStudent);
+
+        if(!studentDeleted){
+            return res.status(404).json({
+                success:false,
+                message:"No student found with the given ID"
+            })
+        }
+
+        res.status(200).json({
+            success:true,
+            message:`Student with name ${studentDeleted.name} deleted successfully`,
+            data:studentDeleted
+        })
+
+
+
+    }catch(error){
+        console.error(error)
+        res.status(500).json({
+            succes:false,
+            message:"Something went wrong! Try it again"
+        })
+
+    }
+
+    
 
 }
 
