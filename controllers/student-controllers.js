@@ -168,10 +168,10 @@ const studentSortByage = async(req,res)=>{
 
         const sortAge = req.query.sort==="desc"? -1:1;
         const sortStudentByAge = await StudentScheme.find().sort({age:sortAge})
-        if(sortStudentByAge){
+        if(sortStudentByAge.length>0){
             res.status(200).json({
                 success:true,
-                message:`Students retrieved successfully (sorted by age ${sortYear===1?" ascending":"descending"})`,
+                message:`Students retrieved successfully (sorted by age ${sortAge===1?" ascending":"descending"})`,
                 count:sortStudentByAge.length,
                 data:sortStudentByAge
             })
